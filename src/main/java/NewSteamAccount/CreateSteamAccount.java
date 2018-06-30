@@ -26,7 +26,7 @@ public class CreateSteamAccount {
     public void makeAccount() throws InterruptedException {
         goToSteamWebsite();
         fillInInformation();
-        //sleep for captca entry
+        //sleep for captcha entry
         sleep(15000);
         clickContinueButton();
     }
