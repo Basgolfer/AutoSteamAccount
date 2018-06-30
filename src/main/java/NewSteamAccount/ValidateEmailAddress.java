@@ -1,24 +1,12 @@
 package NewSteamAccount;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.openqa.selenium.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class ValidateEmailAddress {
-    private WebDriver chromeDriver;
-    private EmailPasswordFetcher emailPasswordFetcher;
+public class ValidateEmailAddress extends CreateSteamAccount{
 
-    public ValidateEmailAddress() throws IOException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Brian\\IdeaProjects\\AutoSteamAccount\\src\\main\\resources\\chromedriver.exe");
-        chromeDriver = new ChromeDriver();
-        emailPasswordFetcher = new EmailPasswordFetcher();
+    public ValidateEmailAddress(WebDriver driver) throws IOException {
+        chrome = driver;
     }
 
     public void signIn() throws InterruptedException {
@@ -29,35 +17,33 @@ public class ValidateEmailAddress {
         clickNextButton2ndTime();
         clickEmail();
         clickCreateMyAccount();
-        toTab1();
+        toTab(1);
         DeleteEmail();
     }
 
     private void DeleteEmail() throws InterruptedException {
-        WebElement element = chromeDriver.findElement(By.cssSelector(".T-IJ-J5-Ji.nX T-I-ax7.T-I-Js-Gs.T-I-Js-IF.W6eDmd.T-I-JW"));
-        WebDriverWait wait = new WebDriverWait(chromeDriver, 10);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
+        WebElement element = chrome.findElement(By.xpath("//*[@id=\":5\"]/div[2]/div[1]/div/div[2]/div[3]/div"));
         element.click();
-    }
-
-    private void toTab1() {
-        ArrayList<String> tabs = new ArrayList<String>(chromeDriver.getWindowHandles());
-        chromeDriver.switchTo().window(tabs.get(0));
     }
 
     private void clickCreateMyAccount() throws InterruptedException {
-        WebElement element = chromeDriver.findElement(By.xpath("//a/span[contains(./text(),\"Create My Account\")]"));
+        WebElement element = chrome.findElement(By.xpath("//a/span[contains(./text(),\"Create My Account\")]"));
         sleep();
-        element.click();
+        try {
+            element.click();
+        } catch (StaleElementReferenceException e) {
+            element = chrome.findElement(By.xpath("//a/span[contains(./text(),\"Create My Account\")]"));
+            element.click();
+        }
     }
 
     private void clickEmail() {
-        WebElement element = chromeDriver.findElement(By.xpath("//span[text()='Steam']"));
-        ((JavascriptExecutor)chromeDriver).executeScript("arguments[0].click();", element);
+        WebElement element = chrome.findElement(By.id(":36"));
+        element.click();
     }
 
     private WebElement getNextButton2ndTime() {
-        return chromeDriver.findElement(By.xpath("//span[text()='Next']"));
+        return chrome.findElement(By.xpath("//span[text()='Next']"));
     }
 
     private void clickNextButton2ndTime() throws InterruptedException {
@@ -66,11 +52,13 @@ public class ValidateEmailAddress {
     }
 
     private void goToGmailWebsite() {
-        chromeDriver.get("https://accounts.google.com/signin/v2/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin");
+        ((JavascriptExecutor)chrome).executeScript("window.open()");
+        toTab(1);
+        chrome.get("https://accounts.google.com/signin/v2/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin");
     }
 
     private WebElement getEmailOrPhoneTextBox() {
-        return chromeDriver.findElement(By.id("identifierId"));
+        return chrome.findElement(By.id("identifierId"));
     }
 
     private void setEmailOrPhoneTextBox() {
@@ -78,7 +66,7 @@ public class ValidateEmailAddress {
     }
 
     private WebElement getNextButton() {
-        return chromeDriver.findElement(By.id("identifierNext"));
+        return chrome.findElement(By.id("identifierNext"));
     }
 
     private void clickNextButton() throws InterruptedException {
@@ -91,7 +79,7 @@ public class ValidateEmailAddress {
     }
 
     private WebElement getPasswordTextBox() {
-        return chromeDriver.findElement(By.name("password"));
+        return chrome .findElement(By.name("password"));
     }
 
     private void setPasswordTextBox() {

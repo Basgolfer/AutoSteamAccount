@@ -19,7 +19,7 @@ public class ValidateEmailAddressTest {
 
     @Before
     public void setUp() throws IOException {
-        validateEmailAddress = new ValidateEmailAddress();
+        //validateEmailAddress = new ValidateEmailAddress();
         Field firefoxField = Whitebox.getField(ValidateEmailAddress.class, "chromeDriver");
         chromeDriver = (WebDriver) Whitebox.getFieldValue(firefoxField, validateEmailAddress);
         Field emailPasswordFetcherField = Whitebox.getField(ValidateEmailAddress.class, "emailPasswordFetcher");
