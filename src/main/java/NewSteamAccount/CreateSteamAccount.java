@@ -165,6 +165,7 @@ public class CreateSteamAccount {
         WebElement completeSignUp = chrome.findElement(By.xpath("//*[@id=\"createAccountButton\"]/span"));
         completeSignUp.click();
         System.out.println("Account made: " + this.username);
+        sleep(500);
         chrome.quit();
     }
 }
