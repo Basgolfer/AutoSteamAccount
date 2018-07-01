@@ -100,7 +100,7 @@ public class CreateSteamAccount {
 
     public void enterNameAndPassword() throws IOException, InterruptedException {
         toTab(0);
-        sleep(5000);
+        sleep(8000);
         WebElement element = chrome.findElement(By.id("accountname"));
         String numbersForUsername = getNumbersForUserName();
         String username = "Melad" + numbersForUsername;
@@ -109,6 +109,7 @@ public class CreateSteamAccount {
         updateUserNameTxtFile();
         if (UserNameAvailable()) {
             enterPassword();
+            sleep(500);
             enterPasswordAgain();
         }
         else {
@@ -159,7 +160,8 @@ public class CreateSteamAccount {
         return bufferedReader.readLine();
     }
 
-    public void clickSignUp() {
+    public void clickSignUp() throws InterruptedException {
+        sleep(500);
         WebElement completeSignUp = chrome.findElement(By.xpath("//*[@id=\"createAccountButton\"]/span"));
         completeSignUp.click();
         System.out.println("Account made: " + this.username);
