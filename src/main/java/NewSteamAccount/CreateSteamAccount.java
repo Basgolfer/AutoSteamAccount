@@ -12,6 +12,7 @@ public class CreateSteamAccount {
 
     WebDriver chrome;
     EmailPasswordFetcher emailPasswordFetcher;
+    private String username;
 
     public CreateSteamAccount() throws IOException {
         emailPasswordFetcher = new EmailPasswordFetcher();
@@ -102,7 +103,9 @@ public class CreateSteamAccount {
         sleep(5000);
         WebElement element = chrome.findElement(By.id("accountname"));
         String numbersForUsername = getNumbersForUserName();
-        element.sendKeys("Melad" + numbersForUsername);
+        String username = "Melad" + numbersForUsername;
+        this.username = username;
+        element.sendKeys(username);
         updateUserNameTxtFile();
         if (UserNameAvailable()) {
             enterPassword();
@@ -154,5 +157,12 @@ public class CreateSteamAccount {
     private String getNumbersForUserName() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader("C:\\Users\\Brian\\IdeaProjects\\AutoSteamAccount\\src\\main\\resources\\UserName.txt"));
         return bufferedReader.readLine();
+    }
+
+    public void clickSignUp() {
+        WebElement completeSignUp = chrome.findElement(By.xpath("//*[@id=\"createAccountButton\"]/span"));
+        completeSignUp.click();
+        System.out.println("Account made: " + this.username);
+        chrome.quit();
     }
 }

@@ -10,5 +10,6 @@ public class Main {
         ValidateEmailAddress validateEmailAddress = new ValidateEmailAddress(createSteamAccount.getChromeDriver());
         validateEmailAddress.signIn();
         createSteamAccount.enterNameAndPassword();
+        createSteamAccount.clickSignUp();
     }
 }
