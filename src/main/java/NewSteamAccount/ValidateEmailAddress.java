@@ -38,7 +38,7 @@ public class ValidateEmailAddress extends CreateSteamAccount{
     }
 
     private void clickEmail() {
-        WebElement element = chrome.findElement(By.id(":23"));
+        WebElement element = chrome.findElement(By.xpath("//*[@id=\":2\"]/div/div/div[6]"));
         element.click();
     }
 
